@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+<form id = "ageForm">
+    
+  <div class="base">
+        <div class="block">
+            <p class="title">Enter your year of birth</p>
+            <input type="text" name="year" id="year" placeholder="yyyy" required="required" minlength="4" maxlength="4" onkeydown="handleKeyDown(event)" />
+        </div>
+
+        <input type="button" name="submit" value="Tell me my age!" onclick="age1()">
+   
+         <div id="age"></div>
+        <!-- 
+    <div id="tryagain"></div> -->
+  </div>
+
+<div class="tracks">
+  <audio id="audio">
+    <source src="audio/audio.mp3">
+    </audio>
+    <p class ="pmusic">Music</p>
+<img src="img/backward.png" onclick="playBackward()">
+<img src="img/play.png" id="playBTN1" onclick="play()">
+<img src="img/pause.png" id="pauseBTN1" onclick="pause()">
+<img src="img/forward.png" onclick="playForward()">
+<img src="img/mute.png" id="muteBTN1" onclick="muteUnmute()">
+</div>
+
+</form>
+<script>
+function handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      age1();
+    }
+  }
+ 
+  function age1() {
+    var y1 = document.getElementById('year').value;
+    if (y1.length === 0) {
+      document.getElementById('age').innerHTML = 'Enter a number';
+    } else if (isNaN(y1)) {
+      document.getElementById('age').innerHTML = 'Enter a number';
+    } else {
+      var currentYear = new Date().getFullYear();
+      var y = currentYear - y1;
+      document.getElementById('age').innerHTML = 'Your age is ' + y;
+    }
+  }
+
+
+
+
+var audio = document.getElementById('audio');
+audio.loop = true;
+audio.volume = 0.5;
+var playBTN = document.getElementById('playBTN1');
+var pauseBTN = document.getElementById('pauseBTN1');
+var muteBTN = document.getElementById('muteBTN1');
+var count = 0;
+
+function muteUnmute(){
+    if(audio.muted == false){
+        audio.muted = true;
+        muteBTN.src = "img/unmute.png";
+    }
+    else {
+        audio.muted = false;
+        muteBTN.src = 'img/mute.png';
+    }
+}
+function pause(){
+    audio.pause();
+    count = 0;
+    playBTN.src ="img/play.png";
+
+}
+
+function play(){
+ if(count == 0) {
+  count = 1;
+  playBTN.src ="img/stop.png"
+  audio.play();
+  
+ }
+ else {
+  count = 0;
+  playBTN.src ="img/play.png"
+  audio.pause();
+  audio.currentTime = 0;
+ }
+}
+
+function playForward() {
+    audio.currentTime += 10;
+}
+
+function playBackward () {
+    audio.currentTime -= 10;
+}
+// function trymore() {
+// var myDiv = document.getElementById('tryagain');
+// var btn = document.createElement("button");
+// btn.id = "btn1";
+// btn.innerHTML = 'Try again';
+// myDiv.appendChild(btn);
+
+// function resetAll() {
+//     document.getElementById("ageForm").reset(); 
+// }
+// btn1.addEventListener('reset', resetAll);
+// }
+
+
+</script>
+
+</body>
+</html>
